@@ -6,7 +6,7 @@ export default function Homepage() {
   const jobs = JobItems;
 
   return (
-    <div>
+    <div className="flex-1" >
       <Search />
       <JobSection initialJobs={jobs}/>
     </div>

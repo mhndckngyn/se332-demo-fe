@@ -1,11 +1,10 @@
-export type JobItem = {
+export type JobData = {
   id: string;
   name: string;
   company: string;
-  minSalary?: number;
-  maxSalary?: number;
+  minSalary: number | null;
+  maxSalary: number | null;
   url: string;
   companyUrl: string;
-  companyImageUrl: string;
   location: string;
 };

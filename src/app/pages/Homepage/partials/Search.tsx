@@ -16,7 +16,7 @@ export default function Search() {
           Khám phá hàng ngàn cơ hội việc làm phù hợp với bạn ngay hôm nay
         </p>
       </div>
-      <div className='flex w-full justify-center'>
+      <div className='flex w-full justify-center gap-2'>
         <label className='input input-bordered flex items-center gap-2 xl:min-w-[420px]'>
           <img src={search} alt='' className='w-[16px] h-[16px]' />
           <input
@@ -25,7 +25,6 @@ export default function Search() {
             placeholder='UI Designer, Business Analyst,... '
           />
         </label>
-        <div className='divider divider-horizontal'></div>
         <label className='input input-bordered flex items-center gap-2 xl:min-w-[420px]'>
           <img src={location} alt='' className='w-[18px] h-[18px]' />
           <input
@@ -34,7 +33,7 @@ export default function Search() {
             placeholder='Hà Nội, Đà Nẵng, Cần Thơ,... '
           />
         </label>
-        <button className='btn btn-primary ml-[24px]'>Tìm kiếm</button>
+        <button className='btn btn-primary'>Tìm kiếm</button>
       </div>
     </div>
   );

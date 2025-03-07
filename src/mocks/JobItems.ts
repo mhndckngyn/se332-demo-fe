@@ -1,13 +1,12 @@
-import { JobItem } from "@/app/types/JobItem";
+import { JobData } from "@/app/types/data";
 
-export const JobItems: JobItem[] = [
+export const JobItems: JobData[] = [
   {
     id: "1",
     name: "Kỹ sư phần mềm",
     company: "Tập đoàn Viettel",
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "Hà Nội, Đà Nẵng",
   },
   {
@@ -18,7 +17,6 @@ export const JobItems: JobItem[] = [
     maxSalary: 15,
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "TP. Hồ Chí Minh",
   },
   {
@@ -29,7 +27,6 @@ export const JobItems: JobItem[] = [
     maxSalary: 17,
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "Cần Thơ",
   },
   {
@@ -39,7 +36,6 @@ export const JobItems: JobItem[] = [
     minSalary: 30,
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "TP. Hồ Chí Minh",
   },
   {
@@ -50,7 +46,6 @@ export const JobItems: JobItem[] = [
     maxSalary: 12,
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "Đồng Tháp",
   },
   {
@@ -59,7 +54,6 @@ export const JobItems: JobItem[] = [
     company: "Tập đoàn Lớn",
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "Hải Phòng",
   },
   {
@@ -69,7 +63,6 @@ export const JobItems: JobItem[] = [
     minSalary: 50,
     url: "",
     companyUrl: "",
-    companyImageUrl: "https://picsum.photos/200",
     location: "Vũng Tàu",
   },
 ];
