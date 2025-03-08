@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { JobSectionProps } from '../types';
 import JobItem from '@/app/components/JobItem';
+import { JobData } from '@/app/types/data';
 
-export default function JobSection({ initialJobs }: JobSectionProps) {
+export default function JobSection({ initialJobs, setApplyingJob }: JobSectionProps) {
   const [jobs, setJobs] = useState(initialJobs);
+  const handleApply = (job: JobData) => {
+    return () => {
+      setApplyingJob(null); // Reset first
+      setTimeout(() => setApplyingJob(job), 0); // Set the job in the next tick
+    };
+  };
 
   return (
     <div className='px-[100px] py-[40px] gap-8 bg-base-200'>
@@ -17,20 +24,13 @@ export default function JobSection({ initialJobs }: JobSectionProps) {
         <div className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4'>
           {jobs.map((job) => (
             <JobItem key={job.id} job={job}>
-              <button className='btn btn-soft btn-primary'>
-                Xem chi tiết
+              <button
+                className='btn btn-soft btn-primary'
+                onClick={handleApply(job)}>
+                Ứng tuyển
               </button>
             </JobItem>
           ))}
-        </div>
-        <div className='join self-center'>
-          <button className='join-item btn'>«</button>
-          <button className='join-item btn'>1</button>
-          <button className='join-item btn'>2</button>
-          <button className='join-item btn btn-disabled'>...</button>
-          <button className='join-item btn'>99</button>
-          <button className='join-item btn'>100</button>
-          <button className='join-item btn'>»</button>
         </div>
       </div>
     </div>

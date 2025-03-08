@@ -3,11 +3,11 @@ import React from 'react';
 export default function LoginModal() {
   return (
     <dialog id='login-modal' className='modal'>
-      <div className='modal-box'>
+      <div className='modal-box w-fit'>
         <h3 className='font-bold text-lg'>Chào mừng trở lại 🎉</h3>
         <form action='dialog'>
           <div className='mt-[20px] flex flex-col gap-2'>
-            <label className='input w-full'>
+            <label className='input lg:w-[24rem]'>
               <svg
                 className='h-[1em] opacity-50'
                 xmlns='http://www.w3.org/2000/svg'
@@ -24,7 +24,7 @@ export default function LoginModal() {
               </svg>
               <input type='email' placeholder='Email' required />
             </label>
-            <label className='input w-full'>
+            <label className='input lg:w-[24rem]'>
               <svg
                 className='h-[1em] opacity-50'
                 xmlns='http://www.w3.org/2000/svg'

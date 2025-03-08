@@ -7,8 +7,7 @@ export default function Search() {
       <div>
         <h1 className='text-4xl font-semibold text-center'>
           Tìm kiếm{' '}
-          <span className='relative px-1.5 italic'>
-            <span className='absolute -inset-x-1 -inset-y-0.5 bg-accent -z-10 rounded-lg'></span>
+          <span className='relative px-2 italic bg-accent rounded-lg py-1'>
             công việc mơ ước
           </span>
         </h1>
