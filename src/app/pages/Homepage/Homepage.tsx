@@ -9,18 +9,10 @@ export default function Homepage() {
   const jobs = JobItems;
   const [applyingJob, setApplyingJob] = useState<JobData | null>(null);
 
-  useEffect(() => {
-    const modal = document.getElementById('job-apply-form');
-    if (modal instanceof HTMLDialogElement) {
-      modal.showModal();
-    }
-  }, [applyingJob])
-
   return (
     <div className='flex-1'>
       <Search />
       <JobSection initialJobs={jobs} setApplyingJob={setApplyingJob} />
-      <ApplyJobModal />
     </div>
   );
 }

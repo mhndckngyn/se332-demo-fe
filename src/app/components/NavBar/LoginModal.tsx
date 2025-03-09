@@ -1,11 +1,22 @@
-import React from 'react';
+import { useForm } from 'react-hook-form';
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 export default function LoginModal() {
+  const { register, handleSubmit } = useForm<LoginFormData>();
+
+  const login = (data: LoginFormData) => {
+    console.log('login', data);
+  };
+
   return (
     <dialog id='login-modal' className='modal'>
       <div className='modal-box w-fit'>
         <h3 className='font-bold text-lg'>Chào mừng trở lại 🎉</h3>
-        <form action='dialog'>
+        <form onSubmit={handleSubmit(login)} action='dialog'>
           <div className='mt-[20px] flex flex-col gap-2'>
             <label className='input lg:w-[24rem]'>
               <svg
@@ -22,7 +33,12 @@ export default function LoginModal() {
                   <path d='m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7'></path>
                 </g>
               </svg>
-              <input type='email' placeholder='Email' required />
+              <input
+                {...(register('email'), { required: 'Vui lòng nhập email' })}
+                type='email'
+                placeholder='Email'
+                required
+              />
             </label>
             <label className='input lg:w-[24rem]'>
               <svg
@@ -36,10 +52,20 @@ export default function LoginModal() {
                   fill='none'
                   stroke='currentColor'>
                   <path d='M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z'></path>
-                  <circle cx='16.5' cy='7.5' r='.5' fill='currentColor'></circle>
+                  <circle
+                    cx='16.5'
+                    cy='7.5'
+                    r='.5'
+                    fill='currentColor'></circle>
                 </g>
               </svg>
-              <input type='password' required placeholder='Mật khẩu' />
+              <input
+                {...(register('password'),
+                { required: 'Vui lòng nhập mật khẩu' })}
+                type='password'
+                required
+                placeholder='Mật khẩu'
+              />
             </label>
           </div>
           <div className='modal-action'>

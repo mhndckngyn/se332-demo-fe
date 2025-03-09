@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <>
       <div className='navbar bg-base-100 gap-4 px-[100px] sticky top-0 z-30'>
-        <a className='flex justify-start flex-0 btn btn-ghost px-2' href='/'>
+        <a className='flex justify-start flex-0 btn btn-ghost px-2' href='/jobs'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='32'
