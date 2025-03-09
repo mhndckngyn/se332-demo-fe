@@ -1,8 +1,8 @@
-import JobDetails from '@/mocks/JobDetails';
+import JobDetailsExample from '@/mocks/JobDetailsExample';
 import { useState } from 'react';
 import JobApplicationForm from './partials/JobApplicationForm';
 const JobDetail = () => {
-  const jobDetail = JobDetails;
+  const jobDetail = JobDetailsExample;
   const [openForm, setOpenForm] = useState<boolean>();
 
   const handleApply = () => {
@@ -10,7 +10,7 @@ const JobDetail = () => {
   };
 
   return (
-    <div className='flex-1 min-h-screen'>
+    <div className='flex-1 min-h-[80vh]'>
       {openForm && (
         <div className='fixed inset-0 flex items-center justify-center'>
           <div className='h-screen w-screen bg-black opacity-50 fixed top-0 left-0'></div>
@@ -39,17 +39,17 @@ const JobDetail = () => {
               <div></div>
             </div>
             <div className='divider'></div>
-            <div className='flex flex-col gap-1.5'>
-              <div className='flex justify-between'>
-                <p>Ngày đăng</p>
+            <div className='flex justify-between'>
+              <div className='flex flex-col gap-1'>
+                <p className='font-semibold'>Ngày đăng 🕰</p>
                 <p className='text-neutral-500'>1/1/2025</p>
               </div>
-              <div className='flex justify-between '>
-                <p>Ứng tuyển trước</p>
+              <div className='flex flex-col gap-1'>
+                <p className='font-semibold'>Ứng tuyển trước ⌛</p>
                 <p className='text-neutral-500'>8/1/2025</p>
               </div>
-              <div className='flex justify-between '>
-                <p>Mức lương</p>
+              <div className='flex flex-col gap-1'>
+                <p className='font-semibold'>Mức lương 💸</p>
                 <p className='text-neutral-500'>
                   {jobDetail.minSalary && jobDetail.maxSalary
                     ? `${jobDetail.minSalary} - ${jobDetail.maxSalary} triệu`

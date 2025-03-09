@@ -1,4 +1,4 @@
-const JobDetails = {
+const JobDetailsExample = {
   name: 'Nhà Bảo Hộ Mai Sau',
   company: 'Piltover Industries',
   location: 'Piltover',
@@ -32,4 +32,4 @@ const JobDetails = {
   ],
 };
 
-export default JobDetails;
+export default JobDetailsExample;

@@ -1,12 +1,12 @@
 import JobItem from '@/app/components/JobItem';
 import { JobData } from '@/app/types/data';
 import { add } from '@/assets';
-import { JobItems } from '@/mocks/JobItems';
+import { JobItemsExample } from '@/mocks/JobItemsExample';
 import { useState } from 'react';
 import JobInfoModal from './partials/JobInfoModal';
 
 export default function RecruiterPage() {
-  const [jobs, setJobs] = useState(JobItems);
+  const [jobs, setJobs] = useState(JobItemsExample);
   const [selectedJob, setSelectedJob] = useState<JobData | null>(null);
 
   const handleFormOpen = (jobData: JobData | null) => {
@@ -19,7 +19,7 @@ export default function RecruiterPage() {
 
   return (
     <div className='flex-1 bg-base-200 px-[100px] py-[30px]'>
-      <div className='flex justify-between'>
+      <div className='flex items-center gap-[20px]'>
         <h1 className='text-2xl font-semibold'>Việc làm bạn đã đăng tải</h1>
         <button className='btn btn-ghost' onClick={() => handleFormOpen(null)}>
           <img src={add} alt='' className='w-[24px]' />
