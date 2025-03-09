@@ -1,127 +1,93 @@
-import Benefits from "@/app/components/Benefit";
-import JobApplicationForm from "@/app/components/Form";
-import JobList from "@/app/components/JobList";
-import { useState } from "react";
-import { CiCircleCheck } from "react-icons/ci";
+import JobDetails from '@/mocks/JobDetails';
+import { useState } from 'react';
+import JobApplicationForm from './partials/JobApplicationForm';
 const JobDetail = () => {
-  const applied = 5;
-  const capacity = 10;
-  const progress = (applied / capacity) * 100;
+  const jobDetail = JobDetails;
+  const [openForm, setOpenForm] = useState<boolean>();
 
-  const [openForm, setOpenForm] = useState<boolean>()
+  const handleApply = () => {
+    setOpenForm((prevState) => !prevState);
+  };
+
   return (
-    <div className="bg-[#F8F8FD] py-6">
-      <div className="">
-        <div className="relative bg-white p-4 rounded-sm max-w-[1200px] mx-auto flex justify-between items-center border border-[#D6DDEB]">
-          {openForm && (
-            <div className="fixed inset-0 flex items-center justify-center">
-              <div className="h-screen w-screen bg-black opacity-50 fixed top-0 left-0"></div>
-              <div className="bg-white rounded-lg shadow-lg z-10">
-                <JobApplicationForm setOpenForm = {setOpenForm}/>
+    <div className='flex-1 min-h-screen'>
+      {openForm && (
+        <div className='fixed inset-0 flex items-center justify-center'>
+          <div className='h-screen w-screen bg-black opacity-50 fixed top-0 left-0'></div>
+          <div className='bg-white rounded-lg shadow-lg z-10'>
+            <JobApplicationForm setOpenForm={setOpenForm} />
+          </div>
+        </div>
+      )}
+      <div className='bg-[#F8F8FD] px-[100px] py-[40px] gap-[20px] grid place-items-center'>
+        <div className='flex bg-base-100 p-[30px] rounded-xl shadow-sm'>
+          <div className='bg-blue-500 text-white text-xl font-bold p-3 rounded-lg h-max mt-1'>
+            S
+          </div>
+          <div className='pl-5 flex-1'>
+            <div className='flex flex-col'>
+              <div className='flex justify-between'>
+                <div>
+                  <h1 className='text-2xl font-bold'>{jobDetail.name}</h1>
+                  <p className='text-gray-500 mt-1 mb-3'>
+                    {jobDetail.company} ({jobDetail.location})
+                  </p>
+                </div>
+                <button className='btn btn-primary' onClick={handleApply}>Ứng tuyển</button>
               </div>
+              <p className='prose'>{jobDetail.description}</p>
+              <div></div>
             </div>
-          )}
-          <div className="flex items-center">
-            <div className="bg-blue-500 text-white text-xl font-bold p-3 rounded-lg">S</div>
-            <div className="ml-3">
-              <h2 className="text-xl font-bold text-[#25324B]">Social Media Assistant</h2>
-              <p className="text-gray-500">Stripe · Paris, France · Full-Time</p>
+            <div className='divider'></div>
+            <div className='flex flex-col gap-1.5'>
+              <div className='flex justify-between'>
+                <p>Ngày đăng</p>
+                <p className='text-neutral-500'>1/1/2025</p>
+              </div>
+              <div className='flex justify-between '>
+                <p>Ứng tuyển trước</p>
+                <p className='text-neutral-500'>8/1/2025</p>
+              </div>
+              <div className='flex justify-between '>
+                <p>Mức lương</p>
+                <p className='text-neutral-500'>
+                  {jobDetail.minSalary && jobDetail.maxSalary
+                    ? `${jobDetail.minSalary} - ${jobDetail.maxSalary} triệu`
+                    : jobDetail.minSalary
+                    ? `Từ ${jobDetail.minSalary} triệu`
+                    : jobDetail.maxSalary
+                    ? `Tới ${jobDetail.maxSalary} triệu`
+                    : `Lương thỏa thuận`}
+                </p>
+              </div>
             </div>
           </div>
-          <button
-            onClick={() =>
-              setOpenForm((prevState) => !prevState)
-            }
-            className="btn btn-primary"
-          >
-            Apply
-          </button>
         </div>
-
-        <div className="bg-white py-4 mt-[24px]">
-          <div className="max-w-[1200px] mx-auto mt-4 flex ">
-            <div className="w-3/5">
-              <div className="mb-4">
-              <h3 className="text-lg font-semibold">Description</h3>
-              <p className="text-gray-700">
-                Stripe is looking for a Social Media Marketing expert to help manage our online networks. You will be responsible for monitoring our social media channels, creating content, finding effective ways to engage the community, and incentivizing others to engage on our channels.
-              </p>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Responsibilities</h3>
-              <ul className="pl-6 text-gray-700">
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Community engagement to ensure active representation online</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Focus on social media content development and publication</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Marketing and strategy support</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Stay on top of trends on social media platforms</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Engage with online communities</li>
-              </ul>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Who You Are</h3>
-              <ul className="list-disc pl-6 text-gray-700">
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/> You get energy from people and building a great work environment</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/> You have a sense for beautiful spaces and office experiences</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/> You're a confident office manager, ready for added responsibilities</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/> You're detail-oriented and creative</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/> You're a growth marketer and know how to run campaigns</li>
-              </ul>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Nice-To-Haves</h3>
-              <ul className="list-disc pl-6 text-gray-700">
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Fluent in English</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Project management skills</li>
-                <li className="flex items-center"><CiCircleCheck className="text-[#56CDAD] mr-2"/>Copy editing skills</li>
-              </ul>
-            </div>
-            </div>
-
-            <div className="w-2/5 ml-8">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold">About this role</h3>
-                <div className="p-4 bg-gray-50 rounded-lg w-full my-4 shadow-md">
-                  <p className="text-sm font-semibold">
-                    <span className="text-black">{applied} applied</span> of {capacity} capacity
-                  </p>
-                  <div className="w-full h-2 bg-gray-200 rounded-md mt-2">
-                    <div
-                      className="h-full bg-teal-500 rounded-md"
-                      style={{ width: `${progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-                <p className="flex justify-between mt-4 text-[#515B6F]"><p>Apply Before:</p> July 31, 2021</p>
-                <p className="flex justify-between mt-4 text-[#515B6F]"><p>Job Posted On:</p> July 1, 2021</p>
-                <p className="flex justify-between mt-4 text-[#515B6F]"><p>Job Type:</p> Full-Time</p>
-                <p className="flex justify-between mt-4 text-[#515B6F]"><p>Salary:</p> $75k-$85k USD</p>
-              </div>
-
-            <div className="mt-4 p-4">
-              <h3 className="text-lg font-semibold">Categories</h3>
-              <div className="flex space-x-2 mt-2">
-                <span className="bg-[#EB85331A] text-[#FFB836] font-bold px-4 py-2 rounded-full ">Marketing</span>
-                <span className="bg-[#56CDAD1A] text-[#56CDAD] font-bold px-4 py-2 rounded-full ">Design</span>
-              </div>
-            </div>
-
-            <div className="mt-4 p-4">
-              <h3 className="text-lg font-semibold">Required Skills</h3>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="bg-[#F8F8FD] text-[#4640DE] px-4 py-2 rounded-full">Project Management</span>
-                <span className="bg-[#F8F8FD] text-[#4640DE] px-4 py-2 rounded-full">Copywriting</span>
-                <span className="bg-[#F8F8FD] text-[#4640DE] px-4 py-2 rounded-full">Social Media Marketing</span>
-                <span className="bg-[#F8F8FD] text-[#4640DE] px-4 py-2 rounded-full">English</span>
-                <span className="bg-[#F8F8FD] text-[#4640DE] px-4 py-2 rounded-full">Copy Editing</span>
-              </div>
-            </div>
-            </div>
+      </div>
+      <div className='px-[100px] py-[40px] flex flex-col items-center gap-[20px]'>
+        <div className='prose'>
+          <h2>🛠️ Trách nhiệm công việc</h2>
+          <ul>
+            {jobDetail.responsibilities.map((r, index) => (
+              <li key={index}>{r}</li>
+            ))}
+          </ul>
         </div>
-            <Benefits/>
-            <JobList/>
+        <div className='prose'>
+          <h2>👀 Chúng tôi đang tìm...</h2>
+          <ul>
+            {jobDetail.whoAreYou.map((w, index) => (
+              <li key={index}>{w}</li>
+            ))}
+          </ul>
+        </div>
+        <div className='prose'>
+          <h2>💰 Đãi ngộ và phúc lợi</h2>
+          <ul>
+            {jobDetail.benefits.map((b, index) => (
+              <li key={index}>{b}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

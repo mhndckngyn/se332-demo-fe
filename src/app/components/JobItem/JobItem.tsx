@@ -6,12 +6,8 @@ export default function JobItem({ job, children }: JobItemProps) {
       <div className='flex-1 flex flex-col gap-3'>
         <div className='flex gap-3'>
           <div className='flex-1'>
-            <a className='font-medium text-lg block' href={job.url}>
-              {job.name}
-            </a>
-            <p className='text-sm text-neutral-600'>
-              <a href={job.companyUrl}>{job.company}</a>
-            </p>
+            <p className='font-medium text-lg block'>{job.name}</p>
+            <p className='text-sm text-neutral-600'>{job.company}</p>
             <p className='text-sm text-neutral-600'>{job.location}</p>
             {job.minSalary && job.maxSalary && (
               <p className='text-sm text-neutral-600'>
@@ -29,9 +25,7 @@ export default function JobItem({ job, children }: JobItemProps) {
               </p>
             )}
             {!job.minSalary && !job.maxSalary && (
-              <p className='text-sm text-neutral-600'>
-                {`Lương thỏa thuận`}
-              </p>
+              <p className='text-sm text-neutral-600'>{`Lương thỏa thuận`}</p>
             )}
           </div>
         </div>
