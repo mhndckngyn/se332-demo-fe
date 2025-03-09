@@ -1,14 +1,26 @@
 import Benefits from "@/app/components/Benefit";
+import JobApplicationForm from "@/app/components/Form";
 import JobList from "@/app/components/JobList";
+import { useState } from "react";
 import { CiCircleCheck } from "react-icons/ci";
 const JobDetail = () => {
   const applied = 5;
   const capacity = 10;
   const progress = (applied / capacity) * 100;
+
+  const [openForm, setOpenForm] = useState<boolean>()
   return (
-    <div className="bg-[#F8F8FD] min-h-screen py-6">
+    <div className="bg-[#F8F8FD] py-6">
       <div className="">
-        <div className="bg-white p-4 rounded-sm max-w-[1200px] mx-auto flex justify-between items-center border border-[#D6DDEB]">
+        <div className="relative bg-white p-4 rounded-sm max-w-[1200px] mx-auto flex justify-between items-center border border-[#D6DDEB]">
+          {openForm && (
+            <div className="fixed inset-0 flex items-center justify-center">
+              <div className="h-screen w-screen bg-black opacity-50 fixed top-0 left-0"></div>
+              <div className="bg-white rounded-lg shadow-lg z-10">
+                <JobApplicationForm setOpenForm = {setOpenForm}/>
+              </div>
+            </div>
+          )}
           <div className="flex items-center">
             <div className="bg-blue-500 text-white text-xl font-bold p-3 rounded-lg">S</div>
             <div className="ml-3">
@@ -16,7 +28,14 @@ const JobDetail = () => {
               <p className="text-gray-500">Stripe · Paris, France · Full-Time</p>
             </div>
           </div>
-          <button className="btn btn-primary">Apply</button>
+          <button
+            onClick={() =>
+              setOpenForm((prevState) => !prevState)
+            }
+            className="btn btn-primary"
+          >
+            Apply
+          </button>
         </div>
 
         <div className="bg-white py-4 mt-[24px]">
