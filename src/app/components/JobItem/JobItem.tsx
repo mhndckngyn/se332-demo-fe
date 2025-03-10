@@ -6,25 +6,25 @@ export default function JobItem({ job, children }: JobItemProps) {
       <div className='flex-1 flex flex-col gap-3'>
         <div className='flex gap-3'>
           <div className='flex-1'>
-            <p className='font-medium block'>{job.name}</p>
-            <p className='text-sm text-neutral-600'>{job.company}</p>
-            <p className='text-sm text-neutral-600'>{job.location}</p>
-            {job.minSalary && job.maxSalary && (
+            <p className='font-medium block'>{job.tenvieclam}</p>
+            <p className='text-sm text-neutral-600'>{job.tencongty}</p>
+            <p className='text-sm text-neutral-600'>{job.diachi}</p>
+            {job.luongthapnhat && job.luongcaonhat && (
               <p className='text-sm text-neutral-600'>
-                {`${job.minSalary} - ${job.maxSalary} triệu`}
+                {`${job.luongthapnhat} - ${job.luongcaonhat} triệu`}
               </p>
             )}
-            {job.minSalary && !job.maxSalary && (
+            {job.luongthapnhat && !job.luongcaonhat && (
               <p className='text-sm text-neutral-600'>
-                {`Từ ${job.minSalary} triệu`}
+                {`Từ ${job.luongthapnhat} triệu`}
               </p>
             )}
-            {!job.minSalary && job.maxSalary && (
+            {!job.luongthapnhat && job.luongcaonhat && (
               <p className='text-sm text-neutral-600'>
-                {`Tới ${job.maxSalary} triệu`}
+                {`Tới ${job.luongcaonhat} triệu`}
               </p>
             )}
-            {!job.minSalary && !job.maxSalary && (
+            {!job.luongthapnhat && !job.luongcaonhat && (
               <p className='text-sm text-neutral-600'>{`Lương thỏa thuận`}</p>
             )}
           </div>

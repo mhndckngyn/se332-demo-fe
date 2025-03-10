@@ -1,8 +1,7 @@
 import { JobGeneralData } from '@/app/types/data';
 
 export type JobSectionProps = {
-  initialJobs: JobGeneralData[];
-  setApplyingJob: React.Dispatch<React.SetStateAction<JobGeneralData | null>>;
+  jobs: JobGeneralData[];
 };
 
 export type FilterProps = {

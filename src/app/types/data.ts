@@ -1,10 +1,10 @@
 export interface JobGeneralData  {
-  id: string;
-  name: string;
-  company: string;
-  location: string;
-  minSalary: number | null;
-  maxSalary: number | null;
+  idvieclam: string;
+  tenvieclam: string;
+  tencongty: string;
+  diachi: string;
+  luongthapnhat: number | null;
+  luongcaonhat: number | null;
 };
 
 export type JobDetailData = JobGeneralData & {

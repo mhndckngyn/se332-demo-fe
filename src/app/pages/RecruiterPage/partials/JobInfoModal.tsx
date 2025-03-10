@@ -8,10 +8,10 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
 
   useEffect(() => {
     reset({
-      name: initialJob ? initialJob.name : '',
-      location: initialJob ? initialJob.location : '',
-      minSalary: initialJob ? initialJob.minSalary : null,
-      maxSalary: initialJob ? initialJob.maxSalary : null,
+      tenvieclam: initialJob ? initialJob.tenvieclam : '',
+      diachi: initialJob ? initialJob.diachi : '',
+      luongthapnhat: initialJob ? initialJob.luongthapnhat : null,
+      luongcaonhat: initialJob ? initialJob.luongcaonhat : null,
       applyBefore: initialJob ? convertDateToISO(initialJob?.applyBefore) : '',
       responsibilities: initialJob ? initialJob.responsibilities : [''],
       whoAreYou: initialJob ? initialJob.whoAreYou : [''],
@@ -53,7 +53,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               type='text'
               className='input w-full'
               disabled
-              value={initialJob ? initialJob.company : "Tên công ty"}
+              value={initialJob ? initialJob.tencongty : "Tên công ty"}
             />
 
             <label className='input w-full'>

@@ -1,26 +1,7 @@
-import { useState } from 'react';
-import { FilterProps, JobSectionProps } from '../types';
 import JobItem from '@/app/components/JobItem';
-import { JobGeneralData } from '@/app/types/data';
+import { FilterProps, JobSectionProps } from '../types';
 
-export default function JobSection({
-  initialJobs,
-  setApplyingJob,
-}: JobSectionProps) {
-  const [jobs, setJobs] = useState(initialJobs);
-
-  const handleApply = (job: JobGeneralData) => {
-    return () => {
-      setApplyingJob(null); // Reset first
-      setTimeout(() => setApplyingJob(job), 0); // Set the job in the next tick
-
-      const modal = document.getElementById('job-apply-form');
-      if (modal instanceof HTMLDialogElement) {
-        modal.showModal();
-      }
-    };
-  };
-
+export default function JobSection({ jobs }: JobSectionProps) {
   return (
     <div className='px-[100px] py-[40px] gap-8 bg-[#F8F8FD] grid grid-cols-[1fr_4fr]'>
       <div className='flex flex-col gap-4'>
@@ -44,11 +25,10 @@ export default function JobSection({
         </div>
         <div className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4'>
           {jobs.map((job) => (
-            <JobItem key={job.id} job={job}>
+            <JobItem key={job.idvieclam} job={job}>
               <a
                 className='btn btn-soft btn-primary'
-                onClick={handleApply(job)}
-                href={`/jobs/${job.id}`}>
+                href={`/jobs/${job.idvieclam}`}>
                 Xem chi tiết
               </a>
             </JobItem>

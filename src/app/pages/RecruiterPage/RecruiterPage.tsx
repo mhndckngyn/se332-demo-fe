@@ -28,7 +28,7 @@ export default function RecruiterPage() {
       </div>
       <div className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 mt-[20px]'>
         {jobs.map((job) => (
-          <JobItem key={job.id} job={job}>
+          <JobItem key={job.idvieclam} job={job}>
             <button className='btn btn-primary'>Đơn ứng tuyển</button>
             <button className='btn btn-ghost' onClick={() => handleFormOpen(job)}>Chỉnh sửa</button>
           </JobItem>
