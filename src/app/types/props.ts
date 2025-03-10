@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import { JobData } from "./data";
+import { JobDetailData, JobGeneralData } from "./data";
 
 export type JobItemProps = {
-  job: JobData;
+  job: JobGeneralData;
   children: ReactNode;
 }
 
 export type JobInfoProps = {
-  initialJob: JobData | null;
+  initialJob: JobDetailData | null;
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FilterProps, JobSectionProps } from '../types';
 import JobItem from '@/app/components/JobItem';
-import { JobData } from '@/app/types/data';
+import { JobGeneralData } from '@/app/types/data';
 
 export default function JobSection({
   initialJobs,
@@ -9,7 +9,7 @@ export default function JobSection({
 }: JobSectionProps) {
   const [jobs, setJobs] = useState(initialJobs);
 
-  const handleApply = (job: JobData) => {
+  const handleApply = (job: JobGeneralData) => {
     return () => {
       setApplyingJob(null); // Reset first
       setTimeout(() => setApplyingJob(job), 0); // Set the job in the next tick
@@ -35,7 +35,7 @@ export default function JobSection({
           ]}
         />
       </div>
-      <div className='flex flex-col gap-8'>
+      <div className='flex flex-col gap-6'>
         <div>
           <h2 className='text-3xl font-semibold'>Việc làm phù hợp</h2>
           <p className='text-neutral-600 text-sm mt-1.5'>
@@ -65,8 +65,8 @@ function Filter({ title, items }: FilterProps) {
       <input type='checkbox' defaultChecked />
       <div className='collapse-title font-semibold'>{title}</div>
       <div className='collapse-content '>
-        {items.map((item) => (
-          <div className='form-control'>
+        {items.map((item, index) => (
+          <div key={index} className='form-control'>
             <label className='label cursor-pointer gap-2.5'>
               <input
                 type='checkbox'

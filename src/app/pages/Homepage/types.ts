@@ -1,8 +1,8 @@
-import { JobData } from '@/app/types/data';
+import { JobGeneralData } from '@/app/types/data';
 
 export type JobSectionProps = {
-  initialJobs: JobData[];
-  setApplyingJob: React.Dispatch<React.SetStateAction<JobData | null>>;
+  initialJobs: JobGeneralData[];
+  setApplyingJob: React.Dispatch<React.SetStateAction<JobGeneralData | null>>;
 };
 
 export type FilterProps = {

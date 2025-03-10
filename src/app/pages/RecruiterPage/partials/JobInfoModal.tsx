@@ -1,34 +1,26 @@
-import { useEffect, useState } from 'react';
+import { JobDetailData } from '@/app/types/data';
 import { JobInfoProps } from '@/app/types/props';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function JobInfoModal({ initialJob }: JobInfoProps) {
-  const [formData, setFormData] = useState({
-    name: '',
-    location: '',
-    company: '',
-    minSalary: null as number | null,
-    maxSalary: null as number | null,
-  });
+  const { register, handleSubmit, setValue, reset } = useForm<JobDetailData>();
 
   useEffect(() => {
-    if (initialJob) {
-      setFormData({
-        name: initialJob.name,
-        location: initialJob.location,
-        company: initialJob.company,
-        minSalary: initialJob.minSalary,
-        maxSalary: initialJob.maxSalary,
-      });
-    } else {
-      setFormData({
-        name: '',
-        location: '',
-        company: '',
-        minSalary: null as number | null,
-        maxSalary: null as number | null,
-      });
-    }
-  }, [initialJob]);
+    reset({
+      name: initialJob ? initialJob.name : '',
+      location: initialJob ? initialJob.location : '',
+      minSalary: initialJob ? initialJob.minSalary : null,
+      maxSalary: initialJob ? initialJob.maxSalary : null,
+      applyBefore: initialJob ? convertDateToISO(initialJob?.applyBefore) : '',
+      responsibilities: initialJob ? initialJob.responsibilities : [''],
+      whoAreYou: initialJob ? initialJob.whoAreYou : [''],
+    });
+  }, [initialJob, reset]);
+
+  const onSubmit = (data: JobDetailData) => {
+    console.log('Form Data:', data);
+  };
 
   const handleClose = () => {
     const form = document.getElementById('job-info-form');
@@ -37,73 +29,90 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
     }
   };
 
+  const convertDateToISO = (dateStr: string | undefined) => {
+    if (!dateStr) return '';
+    const [day, month, year] = dateStr.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  };
+
   return (
     <dialog id='job-info-form' className='modal'>
-      <div className='modal-box'>
+      <div className='modal-box max-h-[80vh]'>
+        <form method='dialog'>
+          {/* if there is a button in form, it will close the modal */}
+          <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
+            ✕
+          </button>
+        </form>
         <h3 className='font-bold text-lg'>
           {initialJob ? 'Thông tin việc làm' : 'Đăng việc làm mới'}
         </h3>
-        <form method='dialog'>
+        <form onSubmit={handleSubmit(onSubmit)} method='dialog'>
           <div className='mt-3 flex flex-col gap-2'>
             <input
               type='text'
               className='input w-full'
               disabled
-              value={'Tên công ty'}
+              value={initialJob ? initialJob.company : "Tên công ty"}
             />
+
             <label className='input w-full'>
               <span className='label'>Việc làm</span>
               <input
                 type='text'
                 placeholder='Nhập tên việc làm'
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                {...register('name')}
               />
             </label>
+
             <label className='input w-full'>
-              <span className='label'>Địa chỉ</span>
+              <span className='label'>Địa điểm</span>
               <input
                 type='text'
-                placeholder='Nhập địa chỉ làm việc'
-                value={formData.location}
-                onChange={(e) =>
-                  setFormData({ ...formData, location: e.target.value })
-                }
+                placeholder='Nhập địa điểm làm việc'
+                {...register('location')}
               />
             </label>
+
+            <label className='input w-full'>
+              <span className='label'>Ứng tuyển trước</span>
+              <input type='date' {...register('applyBefore')} />
+            </label>
+
             <div className='flex gap-2'>
               <label className='input'>
                 <span className='label'>Min</span>
                 <input
                   type='number'
                   placeholder='Lương tối thiểu'
-                  value={formData.minSalary ? formData.minSalary : ''}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      minSalary: e.target.value ? Number(e.target.value) : null,
-                    })
-                  }
+                  {...register('minSalary')}
                 />
+                <span className='label'>tr. VNĐ</span>
               </label>
               <label className='input'>
                 <span className='label'>Max</span>
                 <input
                   type='number'
                   placeholder='Lương tối đa'
-                  value={formData.maxSalary ? formData.maxSalary : ''}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      maxSalary: e.target.value ? Number(e.target.value) : null,
-                    })
-                  }
+                  {...register('maxSalary')}
                 />
+                <span className='label'>tr. VNĐ</span>
               </label>
             </div>
+
+            <textarea
+              className='textarea w-full'
+              placeholder='Trách nhiệm công việc'
+              {...register('responsibilities')}
+            />
+
+            <textarea
+              className='textarea w-full'
+              placeholder='Yêu cầu ứng viên'
+              {...register('whoAreYou')}
+            />
           </div>
+
           <div className='modal-action'>
             <button
               type='button'
@@ -111,7 +120,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               onClick={handleClose}>
               Hủy
             </button>
-            <button className='btn btn-primary'>
+            <button type='submit' className='btn btn-primary'>
               {initialJob ? 'Lưu' : 'Tạo'}
             </button>
           </div>
