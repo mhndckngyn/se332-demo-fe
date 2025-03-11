@@ -14,7 +14,7 @@ const JobDetail = () => {
     const getJobInfo = async () => {
       const response = await axiosInstance.get(`/job/GetJobById/${id}`);
       if (response.status === 200) {
-        console.log(response.data);
+        setJob(response.data);
       }
     };
 
@@ -25,7 +25,7 @@ const JobDetail = () => {
     setOpenForm((prevState) => !prevState);
   };
 
-  if (!job) return <div>Job not found</div>;
+  if (!job) return <div>Loading...</div>;
 
   return (
     <div className='flex-1 min-h-[80vh]'>
@@ -86,7 +86,7 @@ const JobDetail = () => {
         <div className='prose'>
           <h2>🛠️ Trách nhiệm công việc</h2>
           <ul>
-            {job.responsibilities.map((r, index) => (
+            {job.trachnhiemcongviec.map((r, index) => (
               <li key={index}>{r}</li>
             ))}
           </ul>
@@ -94,7 +94,7 @@ const JobDetail = () => {
         <div className='prose'>
           <h2>🎯 Yêu cầu ứng viên</h2>
           <ul>
-            {job.whoAreYou.map((w, index) => (
+            {job.yeucauungvien.map((w, index) => (
               <li key={index}>{w}</li>
             ))}
           </ul>

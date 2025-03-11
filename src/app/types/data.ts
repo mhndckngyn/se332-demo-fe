@@ -8,10 +8,10 @@ export interface JobGeneralData {
 }
 
 export type JobDetailData = JobGeneralData & {
-  postDate: string;
-  applyBefore: string;
-  responsibilities: string[];
-  whoAreYou: string[];
+  ngaydang: string;
+  ungtuyentruoc: string;
+  trachnhiemcongviec: string[];
+  yeucauungvien: string[];
 };
 
 export type JobApplicationData = {
