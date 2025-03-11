@@ -3,6 +3,7 @@ import JobDetailsListExample from '@/mocks/JobDetailsExample';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import JobApplicationForm from './partials/JobApplicationForm';
+import axiosInstance from '@/modules/axiosInstance';
 
 const JobDetail = () => {
   const { id } = useParams();
@@ -11,9 +12,9 @@ const JobDetail = () => {
 
   useEffect(() => {
     const getJobInfo = async () => {
-      const currentJob = JobDetailsListExample.find((j) => j.id === id);
-      if (currentJob) {
-        setJob(currentJob);
+      const response = await axiosInstance.get(`/job/GetJobById/${id}`);
+      if (response.status === 200) {
+        console.log(response.data);
       }
     };
 
@@ -45,9 +46,9 @@ const JobDetail = () => {
             <div className='flex flex-col'>
               <div className='flex justify-between'>
                 <div>
-                  <h1 className='text-2xl font-bold'>{job.name}</h1>
+                  <h1 className='text-2xl font-bold'>{job.tenvieclam}</h1>
                   <p className='text-gray-500 mt-1'>
-                    {job.company} ({job.location})
+                    {job.tencongty} ({job.diachi})
                   </p>
                 </div>
                 <button className='btn btn-primary' onClick={handleApply}>
@@ -68,12 +69,12 @@ const JobDetail = () => {
               <div className='flex flex-col gap-1'>
                 <p className='font-semibold'>Mức lương 💸</p>
                 <p className='text-neutral-500'>
-                  {job.minSalary && job.maxSalary
-                    ? `${job.minSalary} - ${job.maxSalary} triệu`
-                    : job.minSalary
-                    ? `Từ ${job.minSalary} triệu`
-                    : job.maxSalary
-                    ? `Tới ${job.maxSalary} triệu`
+                  {job.luongthapnhat && job.luongcaonhat
+                    ? `${job.luongthapnhat} - ${job.luongcaonhat} triệu`
+                    : job.luongthapnhat
+                    ? `Từ ${job.luongthapnhat} triệu`
+                    : job.luongcaonhat
+                    ? `Tới ${job.luongcaonhat} triệu`
                     : `Lương thỏa thuận`}
                 </p>
               </div>

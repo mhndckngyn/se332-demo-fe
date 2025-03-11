@@ -23,7 +23,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
   };
 
   const handleClose = () => {
-    const form = document.getElementById('job-info-form');
+    const form = document.getElementById('job-edit-form');
     if (form instanceof HTMLDialogElement) {
       form.close();
     }
@@ -36,10 +36,10 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
   };
 
   return (
-    <dialog id='job-info-form' className='modal'>
+    <dialog id='job-edit-form' className='modal'>
       <div className='modal-box max-h-[80vh]'>
         <form method='dialog'>
-          {/* if there is a button in form, it will close the modal */}
+          {/* Close modal */}
           <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
             ✕
           </button>
@@ -61,7 +61,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               <input
                 type='text'
                 placeholder='Nhập tên việc làm'
-                {...register('name')}
+                {...register('tenvieclam')}
               />
             </label>
 
@@ -70,7 +70,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               <input
                 type='text'
                 placeholder='Nhập địa điểm làm việc'
-                {...register('location')}
+                {...register('diachi')}
               />
             </label>
 
@@ -85,7 +85,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
                 <input
                   type='number'
                   placeholder='Lương tối thiểu'
-                  {...register('minSalary')}
+                  {...register('luongthapnhat')}
                 />
                 <span className='label'>tr. VNĐ</span>
               </label>
@@ -94,7 +94,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
                 <input
                   type='number'
                   placeholder='Lương tối đa'
-                  {...register('maxSalary')}
+                  {...register('luongcaonhat')}
                 />
                 <span className='label'>tr. VNĐ</span>
               </label>
