@@ -12,9 +12,9 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
       diachi: initialJob ? initialJob.diachi : '',
       luongthapnhat: initialJob ? initialJob.luongthapnhat : null,
       luongcaonhat: initialJob ? initialJob.luongcaonhat : null,
-      applyBefore: initialJob ? convertDateToISO(initialJob?.applyBefore) : '',
-      responsibilities: initialJob ? initialJob.responsibilities : [''],
-      whoAreYou: initialJob ? initialJob.whoAreYou : [''],
+      ungtuyentruoc: initialJob ? convertDateToISO(initialJob?.ungtuyentruoc) : '',
+      trachnhiemcongviec: initialJob ? initialJob.trachnhiemcongviec : [''],
+      yeucauungvien: initialJob ? initialJob.yeucauungvien : [''],
     });
   }, [initialJob, reset]);
 

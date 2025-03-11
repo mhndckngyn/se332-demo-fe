@@ -21,7 +21,7 @@ export default function JobItem({ job, children }: JobItemProps) {
             )}
             {!job.luongthapnhat && job.luongcaonhat && (
               <p className='text-sm text-neutral-600'>
-                {`Tới ${job.luongcaonhat} triệu`}
+                {`Đến ${job.luongcaonhat} triệu`}
               </p>
             )}
             {!job.luongthapnhat && !job.luongcaonhat && (

@@ -1,20 +1,43 @@
 import JobItem from '@/app/components/JobItem';
-import { FilterProps, JobSectionProps } from '../types';
+import { JobGeneralData } from '@/app/types/data';
+import { useState } from 'react';
+import {
+  FilterItem,
+  FilterProps,
+  FilterState,
+  JobSectionProps,
+} from '../types';
 
-export default function JobSection({ jobs }: JobSectionProps) {
+export default function JobSection({ unfilteredJobs }: JobSectionProps) {
+  const [salaryFilters, setSalaryFilters] =
+    useState<FilterState[]>(salaryRanges);
+
+  const filterItems: FilterItem[] = salaryRanges.map((filter, index) => ({
+    label: filter.label,
+    onChange: () => {
+      setSalaryFilters((prev) =>
+        prev.map((item, i) =>
+          i === index ? { ...item, enabled: !item.enabled } : item
+        )
+      );
+    },
+  }));
+
+  const currentFilters = salaryFilters.filter((s) => s.enabled);
+  let jobs: JobGeneralData[] = unfilteredJobs;
+  if (currentFilters.length < salaryFilters.length) {
+    jobs = unfilteredJobs.filter((job) =>
+      currentFilters.some(
+        (filter) =>
+          job.luongcaonhat > filter.min && job.luongthapnhat < filter.max
+      )
+    );
+  }
+
   return (
-    <div className='px-[100px] py-[40px] gap-8 bg-[#F8F8FD] grid grid-cols-[1fr_4fr]'>
+    <div className='flex-1 px-[100px] py-[40px] gap-8 bg-[#F8F8FD] grid grid-cols-[1fr_4fr]'>
       <div className='flex flex-col gap-4'>
-        <Filter
-          title={'Mức lương'}
-          items={[
-            'Từ 5 - 10 triệu',
-            'Từ 10 - 15 triệu',
-            'Từ 15 - 25 triệu',
-            'Từ 25 - 40 triệu',
-            '40 triệu trở lên',
-          ]}
-        />
+        <Filter title='Mức lương' items={filterItems} />
       </div>
       <div className='flex flex-col gap-6'>
         <div>
@@ -23,7 +46,7 @@ export default function JobSection({ jobs }: JobSectionProps) {
             {jobs.length} kết quả
           </p>
         </div>
-        <div className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4'>
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4'>
           {jobs.map((job) => (
             <JobItem key={job.idvieclam} job={job}>
               <a
@@ -52,8 +75,9 @@ function Filter({ title, items }: FilterProps) {
                 type='checkbox'
                 defaultChecked
                 className='checkbox checkbox-primary'
+                onChange={item.onChange}
               />
-              <span>{item}</span>
+              <span>{item.label}</span>
             </label>
           </div>
         ))}
@@ -61,3 +85,36 @@ function Filter({ title, items }: FilterProps) {
     </div>
   );
 }
+
+const salaryRanges: FilterState[] = [
+  {
+    label: 'Từ 5 - 10 triệu',
+    min: 5,
+    max: 10,
+    enabled: true,
+  },
+  {
+    label: 'Từ 10 - 15 triệu',
+    min: 10,
+    max: 15,
+    enabled: true,
+  },
+  {
+    label: 'Từ 15 - 25 triệu',
+    min: 15,
+    max: 25,
+    enabled: true,
+  },
+  {
+    label: 'Từ 25 - 40 triệu',
+    min: 5,
+    max: 10,
+    enabled: true,
+  },
+  {
+    label: '40 triệu trở lên',
+    min: 40,
+    max: Infinity,
+    enabled: true,
+  },
+];

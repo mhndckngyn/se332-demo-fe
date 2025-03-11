@@ -2,9 +2,10 @@ import JobItem from '@/app/components/JobItem';
 import { JobDetailData } from '@/app/types/data';
 import { add } from '@/assets';
 import { JobDetailsListExample } from '@/mocks/JobDetailsExample';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import JobApplicationModal from './partials/JobApplicationModal';
 import JobInfoModal from './partials/JobInfoModal';
+import { JobSearchStates } from './props';
 
 export default function RecruiterPage() {
   const [jobs, setJobs] = useState(JobDetailsListExample);
@@ -26,6 +27,10 @@ export default function RecruiterPage() {
       modal.showModal();
     }
   };
+
+  useEffect(() => {
+    const fetchJobsByRecruiter = () => {};
+  }, []);
 
   return (
     <div className='flex-1 bg-base-200 px-[100px] py-[30px] min-h-[80vh]'>

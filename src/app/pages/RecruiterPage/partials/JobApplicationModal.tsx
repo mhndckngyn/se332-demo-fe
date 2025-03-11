@@ -30,7 +30,7 @@ export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
             {job?.tencongty}, {job?.diachi}
           </p>
           <p className='text-sm text-neutral-600'>
-            {`Ứng tuyển trước: ${job?.applyBefore}`}
+            {`Ứng tuyển trước: ${job?.ungtuyentruoc}`}
           </p>
           <p className='text-sm text-neutral-600'>
             {job?.luongthapnhat && `Lương tối thiểu: ${job?.luongthapnhat}`}
