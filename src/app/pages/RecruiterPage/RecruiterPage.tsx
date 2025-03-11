@@ -1,14 +1,13 @@
 import JobItem from '@/app/components/JobItem';
 import { JobDetailData } from '@/app/types/data';
 import { add } from '@/assets';
-import { JobDetailsListExample } from '@/mocks/JobDetailsExample';
+import axiosInstance from '@/modules/axiosInstance';
 import { useEffect, useState } from 'react';
 import JobApplicationModal from './partials/JobApplicationModal';
 import JobInfoModal from './partials/JobInfoModal';
-import { JobSearchStates } from './props';
 
 export default function RecruiterPage() {
-  const [jobs, setJobs] = useState(JobDetailsListExample);
+  const [jobs, setJobs] = useState<JobDetailData[]>([]);
   const [editingJob, setEditingJob] = useState<JobDetailData | null>(null);
   const [viewingJob, setViewingJob] = useState<JobDetailData | null>(null);
 
@@ -29,7 +28,15 @@ export default function RecruiterPage() {
   };
 
   useEffect(() => {
-    const fetchJobsByRecruiter = () => {};
+    const fetchJobsByRecruiter = async () => {
+      const recruiterId = "2a7452e2-3565-41dc-a99c-0aa909409d20";
+      const response = await axiosInstance.get(`/job/GetAllJobs?IdRecruiter=${recruiterId}`);
+      if (response.status === 200) {
+        setJobs(response.data);
+      }
+    };
+
+    fetchJobsByRecruiter();
   }, []);
 
   return (
