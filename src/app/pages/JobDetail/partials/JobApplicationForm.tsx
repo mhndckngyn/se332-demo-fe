@@ -8,7 +8,7 @@ interface FormData {
   email: string;
   phone: string;
   jobTitle: string;
-  linkedin: string;
+  // linkedin: string;
   portfolio: string;
   additionalInfo: string;
   resume: FileList;
@@ -60,10 +60,10 @@ const JobApplicationForm: React.FC<IProps> = ({ setOpenForm }) => {
           <label className="block text-sm font-medium text-gray-700">Số điện thoại</label>
           <input {...register("phone")} type="tel" className="input mt-1.5 w-full" />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700">Trang cá nhân LinkedIn</label>
           <input {...register("linkedin")} type="url" className="input mt-1.5 w-full" />
-        </div>
+        </div> */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Thông tin thêm</label>
           <textarea {...register("additionalInfo")} className="textarea mt-1.5 w-full"></textarea>

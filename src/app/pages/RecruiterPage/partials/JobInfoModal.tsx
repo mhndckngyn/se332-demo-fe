@@ -1,25 +1,39 @@
-import { JobDetailData } from '@/app/types/data';
 import { JobInfoProps } from '@/app/types/props';
+import convertDateToISO from '@/modules/convertDateToISO';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+type FormData = {
+  tenvieclam: string;
+  diachi: string;
+  luongthapnhat: number;
+  luongcaonhat: number;
+  ungtuyentruoc: string;
+  trachnhiemcongviec: string;
+  yeucauungvien: string;
+}
+
 export default function JobInfoModal({ initialJob }: JobInfoProps) {
-  const { register, handleSubmit, setValue, reset } = useForm<JobDetailData>();
+  const { register, handleSubmit, setValue, reset } = useForm<FormData>();
 
   useEffect(() => {
     reset({
       tenvieclam: initialJob ? initialJob.tenvieclam : '',
       diachi: initialJob ? initialJob.diachi : '',
-      luongthapnhat: initialJob ? initialJob.luongthapnhat : null,
-      luongcaonhat: initialJob ? initialJob.luongcaonhat : null,
+      luongthapnhat: initialJob?.luongthapnhat ? initialJob.luongthapnhat : undefined,
+      luongcaonhat: initialJob?.luongcaonhat ? initialJob.luongcaonhat : undefined,
       ungtuyentruoc: initialJob ? convertDateToISO(initialJob?.ungtuyentruoc) : '',
-      trachnhiemcongviec: initialJob ? initialJob.trachnhiemcongviec : [''],
-      yeucauungvien: initialJob ? initialJob.yeucauungvien : [''],
+      trachnhiemcongviec: initialJob ? initialJob.trachnhiemcongviec.join('\n') : '',
+      yeucauungvien: initialJob ? initialJob.yeucauungvien.join('\n') : '',
     });
   }, [initialJob, reset]);
 
-  const onSubmit = (data: JobDetailData) => {
+  const onSubmit = (data: FormData) => {
     console.log('Form Data:', data);
+    const trachNhiemList: string[] = data.trachnhiemcongviec.split('/n');
+    const yeucauList: string[] = data.yeucauungvien.split('/n');
+
+    // trách nhiệm với yêu cầu trong db lưu là text array
   };
 
   const handleClose = () => {
@@ -27,12 +41,6 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
     if (form instanceof HTMLDialogElement) {
       form.close();
     }
-  };
-
-  const convertDateToISO = (dateStr: string | undefined) => {
-    if (!dateStr) return '';
-    const [day, month, year] = dateStr.split('/');
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
   };
 
   return (
@@ -76,7 +84,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
 
             <label className='input w-full'>
               <span className='label'>Ứng tuyển trước</span>
-              <input type='date' {...register('applyBefore')} />
+              <input type='date' {...register('ungtuyentruoc')} />
             </label>
 
             <div className='flex gap-2'>
@@ -103,13 +111,13 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
             <textarea
               className='textarea w-full'
               placeholder='Trách nhiệm công việc'
-              {...register('responsibilities')}
+              {...register('trachnhiemcongviec')}
             />
 
             <textarea
               className='textarea w-full'
               placeholder='Yêu cầu ứng viên'
-              {...register('whoAreYou')}
+              {...register('yeucauungvien')}
             />
           </div>
 

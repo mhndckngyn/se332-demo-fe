@@ -1,9 +1,8 @@
 import { JobDetailData } from '@/app/types/data';
-import JobDetailsListExample from '@/mocks/JobDetailsExample';
+import axiosInstance from '@/modules/axiosInstance';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import JobApplicationForm from './partials/JobApplicationForm';
-import axiosInstance from '@/modules/axiosInstance';
 
 const JobDetail = () => {
   const { id } = useParams();

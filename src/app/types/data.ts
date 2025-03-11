@@ -19,7 +19,7 @@ export type JobApplicationData = {
   idvieclam: string;
   tenungvien: string;
   email: string;
-  linkedin: string;
+  // linkedin: string;
   sodienthoai: string;
-  CVPath: string;
+  cvpath: string;
 };

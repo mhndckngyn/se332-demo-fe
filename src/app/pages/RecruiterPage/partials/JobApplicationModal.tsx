@@ -1,25 +1,28 @@
 import { JobApplicationData } from '@/app/types/data';
 import { JobInfoProps } from '@/app/types/props';
 import axiosInstance from '@/modules/axiosInstance';
+import convertDateToISO from '@/modules/convertDateToISO';
 import { useEffect, useState } from 'react';
+import { FaLinkedinIn, FaRegStar } from 'react-icons/fa';
+import { HiOutlineDocumentDownload } from 'react-icons/hi';
 import { JobApplicationItemProp } from '../props';
-import { JobApplicationListExample } from '@/mocks/JobApplicationsExample';
-import { FaFile, FaLinkedinIn, FaRegStar } from 'react-icons/fa';
+import { apiEndpoint } from '@/settings/backend';
 
 export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
   const [applications, setApplications] = useState<JobApplicationData[]>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
-      // const response = await axiosInstance.get(`/job-application/GetAllJobApplications/${job?.idvieclam}`);
-      // if (response.status === 200) {
-      //   setApplications(response.data);
-      // }
-      setApplications(JobApplicationListExample);
+      const response = await axiosInstance.get(
+        `/job-application/GetAllJobApplications?IdJob=${job?.idvieclam}`
+      );
+      if (response.status === 200) {
+        setApplications(response.data);
+      }
     };
 
     fetchApplications();
-  });
+  }, [job]);
 
   return (
     <dialog id='job-view-modal' className='modal'>
@@ -30,13 +33,15 @@ export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
             {job?.tencongty}, {job?.diachi}
           </p>
           <p className='text-sm text-neutral-600'>
-            {`Ứng tuyển trước: ${job?.ungtuyentruoc}`}
+            {`Ứng tuyển trước: ${convertDateToISO(job?.ungtuyentruoc)}`}
           </p>
           <p className='text-sm text-neutral-600'>
-            {job?.luongthapnhat && `Lương tối thiểu: ${job?.luongthapnhat}`}
+            {job?.luongthapnhat &&
+              `Lương tối thiểu: ${job?.luongthapnhat} triệu VNĐ`}
           </p>
           <p className='text-sm text-neutral-600'>
-            {job?.luongcaonhat && `Lương tối đa: ${job?.luongcaonhat}`}
+            {job?.luongcaonhat &&
+              `Lương tối đa: ${job?.luongcaonhat} triệu VNĐ`}
           </p>
         </div>
         <h3 className='font-bold text-md mt-[16px] mb-[10px]'>
@@ -65,19 +70,28 @@ function JobApplicationItem({ application }: JobApplicationItemProp) {
         <p className=''></p>
       </div>
       <div className='flex gap-2'>
-        <button className='btn btn-circle'>
-          <FaFile />
-        </button>
-        <a
-          className='btn btn-circle'
-          href={application.linkedin}
-          target='_blank'
-          rel='noreferrer noopener'>
-          <FaLinkedinIn />
-        </a>
-        <button className='btn btn-circle'>
-          <FaRegStar />
-        </button>
+        <div className="tooltip" data-tip="Tải về CV ứng viên">
+          <a
+            className='btn btn-circle'
+            href={`${apiEndpoint}${application.cvpath}`}
+            target='_blank'>
+            <HiOutlineDocumentDownload size={18} />
+          </a>
+        </div>
+        {/* <div className='tooltip' data-tip="Trang cá nhân LinkedIn">
+          <a
+            className='btn btn-circle'
+            href={application.linkedin}
+            target='_blank'
+            rel='noreferrer noopener'>
+            <FaLinkedinIn />
+          </a>
+        </div> */}
+        <div className="tooltip" data-tip="Gắn dấu sao">
+          <button className='btn btn-circle'>
+            <FaRegStar />
+          </button>
+        </div>
       </div>
     </div>
   );
