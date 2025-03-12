@@ -3,11 +3,9 @@ import { JobInfoProps } from '@/app/types/props';
 import axiosInstance from '@/modules/axiosInstance';
 import convertDateToISO from '@/modules/convertDateToISO';
 import { useEffect, useState } from 'react';
-import { FaLinkedinIn, FaRegStar } from 'react-icons/fa';
-import { HiOutlineDocumentDownload } from 'react-icons/hi';
-import { JobApplicationItemProp } from '../props';
-import { FaFile, FaLinkedinIn, FaRegStar } from 'react-icons/fa';
+import { FaFile, FaRegStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { JobApplicationItemProp } from '../props';
 
 export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
   const [applications, setApplications] = useState<JobApplicationData[]>([]);
@@ -18,7 +16,6 @@ export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
       if (response.data.length > 0) {
         setApplications(response.data);
       }
-      // setApplications(JobApplicationListExample);
     };
 
     fetchApplications();
