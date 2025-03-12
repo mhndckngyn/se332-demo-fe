@@ -21,7 +21,6 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
   }, [initialJob, reset]);
 
   const onSubmit = async (data: JobDetailData) => {
-    console.log(data)
     await axiosInstance.post('http://localhost:5050/job/CreateJob', {
       tenvieclam: data.tenvieclam,
       idnhatuyendung: user?.idnguoidung,

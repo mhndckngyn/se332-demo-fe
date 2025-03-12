@@ -18,7 +18,7 @@ export default function LoginModal() {
 
     localStorage.setItem('user', JSON.stringify(user));
     if (user.vaitro === 0) {
-      window.location.href = '/jobs';
+      window.location.href = '/';
     } else {
       window.location.href = '/recruiter';
     }
