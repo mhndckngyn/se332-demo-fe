@@ -1,5 +1,6 @@
 import { JobInfoProps } from '@/app/types/props';
-import convertDateToISO from '@/modules/convertDateToISO';
+import useAuth from '@/hooks/useAuth';
+import axiosInstance from '@/modules/axiosInstance';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,8 +15,8 @@ type FormData = {
 }
 
 export default function JobInfoModal({ initialJob }: JobInfoProps) {
-  const { register, handleSubmit, setValue, reset } = useForm<FormData>();
-
+  const { register, handleSubmit, setValue, reset } = useForm<JobDetailData>();
+  const user = useAuth()
   useEffect(() => {
     reset({
       tenvieclam: initialJob ? initialJob.tenvieclam : '',
@@ -28,12 +29,20 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
     });
   }, [initialJob, reset]);
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form Data:', data);
-    const trachNhiemList: string[] = data.trachnhiemcongviec.split('/n');
-    const yeucauList: string[] = data.yeucauungvien.split('/n');
-
-    // trách nhiệm với yêu cầu trong db lưu là text array
+  const onSubmit = async (data: JobDetailData) => {
+    await axiosInstance.post('http://localhost:5050/job/CreateJob', {
+      tenvieclam: data.tenvieclam,
+      idnhatuyendung: user?.idnguoidung,
+      idcongty: user?.idcongty,
+      diachi: data.diachi,
+      luongcaonhat: data.luongcaonhat,
+      luongthapnhat: data.luongthapnhat,
+      trachnhiemcongviec: (data.trachnhiemcongviec as unknown as string).split('\n'),
+      yeucauungvien: (data.yeucauungvien as unknown as string).split('\n'),
+      ngaydang: new Date(),
+      ungtuyentruoc: data.ungtuyentruoc
+    }) 
+    window.location.reload()
   };
 
   const handleClose = () => {
@@ -41,6 +50,12 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
     if (form instanceof HTMLDialogElement) {
       form.close();
     }
+  };
+
+  const convertDateToISO = (dateStr: string | undefined) => {
+    if (!dateStr) return '';
+    const [day, month, year] = dateStr.split('/');
+    return `${year}-${month?.padStart(2, '0')}-${day?.padStart(2, '0')}`;
   };
 
   return (
@@ -61,7 +76,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               type='text'
               className='input w-full'
               disabled
-              value={initialJob ? initialJob.tencongty : "Tên công ty"}
+              value={user ? user?.tencongty : "Tên công ty"}
             />
 
             <label className='input w-full'>
@@ -84,6 +99,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
 
             <label className='input w-full'>
               <span className='label'>Ứng tuyển trước</span>
+              <input type='date' {...register('ungtuyentruoc')} />
               <input type='date' {...register('ungtuyentruoc')} />
             </label>
 
@@ -112,11 +128,13 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               className='textarea w-full'
               placeholder='Trách nhiệm công việc'
               {...register('trachnhiemcongviec')}
+              {...register('trachnhiemcongviec')}
             />
 
             <textarea
               className='textarea w-full'
               placeholder='Yêu cầu ứng viên'
+              {...register('yeucauungvien')}
               {...register('yeucauungvien')}
             />
           </div>

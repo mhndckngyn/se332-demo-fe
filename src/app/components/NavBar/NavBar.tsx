@@ -1,6 +1,18 @@
+import useAuth from '@/hooks/useAuth';
 import LoginModal from './LoginModal';
 
+interface User {
+  email: string
+  idcongty: string,
+  idnguoidung: string,
+  sodienthoai: string,
+  ten: string,
+  tencongty: string
+}
+
+
 export default function NavBar() {
+  const user : User | null  = useAuth();
   const handleLoginOpen = () => {
     const modal = document.getElementById('login-modal');
     if (modal instanceof HTMLDialogElement) {
@@ -8,10 +20,15 @@ export default function NavBar() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/'
+  };
+
   return (
     <>
       <div className='navbar bg-base-100 gap-4 px-[100px] sticky top-0 z-30'>
-        <a className='flex justify-start flex-0 btn btn-ghost px-2' href='/jobs'>
+        <a className='flex justify-start flex-0 btn btn-ghost px-2' href='/'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='32'
@@ -41,10 +58,19 @@ export default function NavBar() {
           </ul>
         </div>
         <div className='flex-1'></div>
-        <div className='flex gap-2'>
-          <button className='btn btn-primary' onClick={handleLoginOpen}>
-            Đăng nhập
-          </button>
+        <div className='flex gap-2 items-center'>
+          {user ? (
+            <>
+              <p className='font-bold text-primary'>Xin chào, {user.ten} 👋</p>
+              <button className='btn btn-primary' onClick={handleLogout}>
+               Đăng Xuất
+              </button>
+            </>
+          ) : (
+            <button className='btn btn-primary' onClick={handleLoginOpen}>
+              Đăng nhập
+            </button>
+          )}
         </div>
       </div>
       <LoginModal />

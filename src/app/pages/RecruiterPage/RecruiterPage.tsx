@@ -5,12 +5,13 @@ import axiosInstance from '@/modules/axiosInstance';
 import { useEffect, useState } from 'react';
 import JobApplicationModal from './partials/JobApplicationModal';
 import JobInfoModal from './partials/JobInfoModal';
+import useAuth from '@/hooks/useAuth';
 
 export default function RecruiterPage() {
   const [jobs, setJobs] = useState<JobDetailData[]>([]);
   const [editingJob, setEditingJob] = useState<JobDetailData | null>(null);
   const [viewingJob, setViewingJob] = useState<JobDetailData | null>(null);
-
+  const user = useAuth()
   const handleOpenEditForm = (jobData: JobDetailData | null) => {
     setEditingJob(jobData);
     const modal = document.getElementById('job-edit-form');
@@ -27,17 +28,17 @@ export default function RecruiterPage() {
     }
   };
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchJobsByRecruiter = async () => {
-      const recruiterId = "2a7452e2-3565-41dc-a99c-0aa909409d20";
-      const response = await axiosInstance.get(`/job/GetAllJobs?IdRecruiter=${recruiterId}`);
-      if (response.status === 200) {
+      const response = await axiosInstance.get(`/job/GetAllJobs?IdRecruiter=${user?.idnguoidung}`);
+      if (response.data.length) {
         setJobs(response.data);
+
       }
     };
 
     fetchJobsByRecruiter();
-  }, []);
+  }, [user?.idnguoidung]);
 
   return (
     <div className='flex-1 bg-base-200 px-[100px] py-[30px] min-h-[80vh]'>

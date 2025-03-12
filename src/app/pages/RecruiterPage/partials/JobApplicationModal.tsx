@@ -6,23 +6,23 @@ import { useEffect, useState } from 'react';
 import { FaLinkedinIn, FaRegStar } from 'react-icons/fa';
 import { HiOutlineDocumentDownload } from 'react-icons/hi';
 import { JobApplicationItemProp } from '../props';
-import { apiEndpoint } from '@/settings/backend';
+import { FaFile, FaLinkedinIn, FaRegStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
   const [applications, setApplications] = useState<JobApplicationData[]>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const response = await axiosInstance.get(
-        `/job-application/GetAllJobApplications?IdJob=${job?.idvieclam}`
-      );
-      if (response.status === 200) {
+      const response = await axiosInstance.get(`/job-application/GetAllJobApplications?IdJob=${job?.idvieclam}`);
+      if (response.data.length > 0) {
         setApplications(response.data);
       }
+      // setApplications(JobApplicationListExample);
     };
 
     fetchApplications();
-  }, [job]);
+  }, [job?.idvieclam]);
 
   return (
     <dialog id='job-view-modal' className='modal'>
@@ -70,28 +70,12 @@ function JobApplicationItem({ application }: JobApplicationItemProp) {
         <p className=''></p>
       </div>
       <div className='flex gap-2'>
-        <div className="tooltip" data-tip="Tải về CV ứng viên">
-          <a
-            className='btn btn-circle'
-            href={`${apiEndpoint}${application.cvpath}`}
-            target='_blank'>
-            <HiOutlineDocumentDownload size={18} />
-          </a>
-        </div>
-        {/* <div className='tooltip' data-tip="Trang cá nhân LinkedIn">
-          <a
-            className='btn btn-circle'
-            href={application.linkedin}
-            target='_blank'
-            rel='noreferrer noopener'>
-            <FaLinkedinIn />
-          </a>
-        </div> */}
-        <div className="tooltip" data-tip="Gắn dấu sao">
-          <button className='btn btn-circle'>
-            <FaRegStar />
-          </button>
-        </div>
+        <Link to ={`http://localhost:5050${application.cvpath}`} className='btn btn-circle'>
+          <FaFile />
+        </Link>
+        <button className='btn btn-circle'>
+          <FaRegStar />
+        </button>
       </div>
     </div>
   );
