@@ -5,13 +5,14 @@ import { JobDetailsListExample } from '@/mocks/JobDetailsExample';
 import { useEffect, useState } from 'react';
 import JobApplicationModal from './partials/JobApplicationModal';
 import JobInfoModal from './partials/JobInfoModal';
-import { JobSearchStates } from './props';
+import axiosInstance from '@/modules/axiosInstance';
+import useAuth from '@/hooks/useAuth';
 
 export default function RecruiterPage() {
   const [jobs, setJobs] = useState(JobDetailsListExample);
   const [editingJob, setEditingJob] = useState<JobDetailData | null>(null);
   const [viewingJob, setViewingJob] = useState<JobDetailData | null>(null);
-
+  const user = useAuth()
   const handleOpenEditForm = (jobData: JobDetailData | null) => {
     setEditingJob(jobData);
     const modal = document.getElementById('job-edit-form');
@@ -28,9 +29,17 @@ export default function RecruiterPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchJobsByRecruiter = () => {};
-  }, []);
+   useEffect(() => {
+    const fetchJobsByRecruiter = async () => {
+      const response = await axiosInstance.get(`/job/GetAllJobs?IdRecruiter=${user?.idnguoidung}`);
+      if (response.data.length) {
+        setJobs(response.data);
+
+      }
+    };
+
+    fetchJobsByRecruiter();
+  }, [user?.idnguoidung]);
 
   return (
     <div className='flex-1 bg-base-200 px-[100px] py-[30px] min-h-[80vh]'>

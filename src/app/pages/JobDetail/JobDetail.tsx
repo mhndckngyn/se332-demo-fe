@@ -82,7 +82,7 @@ const JobDetail = () => {
           </div>
         </div>
       </div>
-      <div className='px-[100px] py-[40px] flex flex-col items-center gap-[20px]'>
+      <div className='px-[100px] py-[40px] flex flex-col mx-auto w-fit'>
         <div className='prose'>
           <h2>🛠️ Trách nhiệm công việc</h2>
           <ul>
@@ -91,7 +91,7 @@ const JobDetail = () => {
             ))}
           </ul>
         </div>
-        <div className='prose'>
+        <div className='prose ml-0 mt-6'>
           <h2>🎯 Yêu cầu ứng viên</h2>
           <ul>
             {job.yeucauungvien.map((w, index) => (

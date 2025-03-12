@@ -21,5 +21,5 @@ export type JobApplicationData = {
   email: string;
   linkedin: string;
   sodienthoai: string;
-  CVPath: string;
+  cvpath: string;
 };

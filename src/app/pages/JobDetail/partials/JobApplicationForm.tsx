@@ -1,7 +1,10 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
+import axiosInstance from "@/modules/axiosInstance";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 interface FormData {
   fullName: string;
@@ -20,9 +23,25 @@ interface IProps {
 
 const JobApplicationForm: React.FC<IProps> = ({ setOpenForm }) => {
   const { register, handleSubmit } = useForm<FormData>();
-
-  const onSubmit = (data: FormData) => {
+  const [file, setFile] = useState<Blob>()
+  const {id} = useParams()
+  const navigate = useNavigate()
+  const onSubmit = async (data: FormData) => {
     console.log("Form submitted", data);
+    const formData = new FormData()
+    formData.append('file', file as Blob)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cv : any = await axios.post('http://localhost:5050/files/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+    await axiosInstance.post('http://localhost:5050/job-application/CreateJobApplication', {
+      idvieclam: id,
+      tenungvien: data.fullName,
+      email: data.email,
+      sodienthoai: data.phone, 
+      cvpath: cv.data.fileUrl
+    })
+    navigate('/jobs')
   };
 
   return (
@@ -70,7 +89,11 @@ const JobApplicationForm: React.FC<IProps> = ({ setOpenForm }) => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">CV của bạn (*.pdf)</label>
-          <input {...register("resume")} type="file" className="file-input mt-1.5 w-full" />
+          <input {...register("resume")} onChange={(e : React.ChangeEvent<HTMLInputElement >) => {
+            if (e.target.files){
+              setFile(e.target.files[0])
+            }
+          }} type="file" className="file-input mt-1.5 w-full" />
         </div>
         <button type="submit" className="btn btn-primary btn-block">Nộp đơn ứng tuyển</button>
       </form>

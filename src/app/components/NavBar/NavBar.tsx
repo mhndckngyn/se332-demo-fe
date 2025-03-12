@@ -1,11 +1,28 @@
+import useAuth from '@/hooks/useAuth';
 import LoginModal from './LoginModal';
 
+interface User {
+  email: string
+  idcongty: string,
+  idnguoidung: string,
+  sodienthoai: string,
+  ten: string,
+  tencongty: string
+}
+
+
 export default function NavBar() {
+  const user : User | null  = useAuth();
   const handleLoginOpen = () => {
     const modal = document.getElementById('login-modal');
     if (modal instanceof HTMLDialogElement) {
       modal.showModal();
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/jobs'
   };
 
   return (
@@ -41,10 +58,19 @@ export default function NavBar() {
           </ul>
         </div>
         <div className='flex-1'></div>
-        <div className='flex gap-2'>
-          <button className='btn btn-primary' onClick={handleLoginOpen}>
-            Đăng nhập
-          </button>
+        <div className='flex gap-2 items-center'>
+          {user ? (
+            <>
+              <p className='font-bold text-primary'>Xin chào, {user.ten} 👋</p>
+              <button className='btn btn-primary' onClick={handleLogout}>
+               Đăng Xuất
+              </button>
+            </>
+          ) : (
+            <button className='btn btn-primary' onClick={handleLoginOpen}>
+              Đăng nhập
+            </button>
+          )}
         </div>
       </div>
       <LoginModal />

@@ -1,11 +1,13 @@
 import { JobDetailData } from '@/app/types/data';
 import { JobInfoProps } from '@/app/types/props';
+import useAuth from '@/hooks/useAuth';
+import axiosInstance from '@/modules/axiosInstance';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function JobInfoModal({ initialJob }: JobInfoProps) {
   const { register, handleSubmit, setValue, reset } = useForm<JobDetailData>();
-
+  const user = useAuth()
   useEffect(() => {
     reset({
       tenvieclam: initialJob ? initialJob.tenvieclam : '',
@@ -18,8 +20,21 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
     });
   }, [initialJob, reset]);
 
-  const onSubmit = (data: JobDetailData) => {
-    console.log('Form Data:', data);
+  const onSubmit = async (data: JobDetailData) => {
+    console.log(data)
+    await axiosInstance.post('http://localhost:5050/job/CreateJob', {
+      tenvieclam: data.tenvieclam,
+      idnhatuyendung: user?.idnguoidung,
+      idcongty: user?.idcongty,
+      diachi: data.diachi,
+      luongcaonhat: data.luongcaonhat,
+      luongthapnhat: data.luongthapnhat,
+      trachnhiemcongviec: (data.trachnhiemcongviec as unknown as string).split('\n'),
+      yeucauungvien: (data.yeucauungvien as unknown as string).split('\n'),
+      ngaydang: new Date(),
+      ungtuyentruoc: data.ungtuyentruoc
+    }) 
+    window.location.reload()
   };
 
   const handleClose = () => {
@@ -32,7 +47,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
   const convertDateToISO = (dateStr: string | undefined) => {
     if (!dateStr) return '';
     const [day, month, year] = dateStr.split('/');
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    return `${year}-${month?.padStart(2, '0')}-${day?.padStart(2, '0')}`;
   };
 
   return (
@@ -53,7 +68,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
               type='text'
               className='input w-full'
               disabled
-              value={initialJob ? initialJob.tencongty : "Tên công ty"}
+              value={user ? user?.tencongty : "Tên công ty"}
             />
 
             <label className='input w-full'>
@@ -76,7 +91,7 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
 
             <label className='input w-full'>
               <span className='label'>Ứng tuyển trước</span>
-              <input type='date' {...register('applyBefore')} />
+              <input type='date' {...register('ungtuyentruoc')} />
             </label>
 
             <div className='flex gap-2'>
@@ -103,13 +118,13 @@ export default function JobInfoModal({ initialJob }: JobInfoProps) {
             <textarea
               className='textarea w-full'
               placeholder='Trách nhiệm công việc'
-              {...register('responsibilities')}
+              {...register('trachnhiemcongviec')}
             />
 
             <textarea
               className='textarea w-full'
               placeholder='Yêu cầu ứng viên'
-              {...register('whoAreYou')}
+              {...register('yeucauungvien')}
             />
           </div>
 

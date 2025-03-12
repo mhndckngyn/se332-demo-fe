@@ -3,23 +3,23 @@ import { JobInfoProps } from '@/app/types/props';
 import axiosInstance from '@/modules/axiosInstance';
 import { useEffect, useState } from 'react';
 import { JobApplicationItemProp } from '../props';
-import { JobApplicationListExample } from '@/mocks/JobApplicationsExample';
 import { FaFile, FaLinkedinIn, FaRegStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function JobApplicationModal({ initialJob: job }: JobInfoProps) {
   const [applications, setApplications] = useState<JobApplicationData[]>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
-      // const response = await axiosInstance.get(`/job-application/GetAllJobApplications/${job?.idvieclam}`);
-      // if (response.status === 200) {
-      //   setApplications(response.data);
-      // }
-      setApplications(JobApplicationListExample);
+      const response = await axiosInstance.get(`/job-application/GetAllJobApplications?IdJob=${job?.idvieclam}`);
+      if (response.data.length > 0) {
+        setApplications(response.data);
+      }
+      // setApplications(JobApplicationListExample);
     };
 
     fetchApplications();
-  });
+  }, [job?.idvieclam]);
 
   return (
     <dialog id='job-view-modal' className='modal'>
@@ -65,16 +65,16 @@ function JobApplicationItem({ application }: JobApplicationItemProp) {
         <p className=''></p>
       </div>
       <div className='flex gap-2'>
-        <button className='btn btn-circle'>
+        <Link to ={`http://localhost:5050${application.cvpath}`} className='btn btn-circle'>
           <FaFile />
-        </button>
-        <a
+        </Link>
+        <Link
           className='btn btn-circle'
-          href={application.linkedin}
+          to={application.linkedin}
           target='_blank'
           rel='noreferrer noopener'>
           <FaLinkedinIn />
-        </a>
+        </Link>
         <button className='btn btn-circle'>
           <FaRegStar />
         </button>
